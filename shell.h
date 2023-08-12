@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <string.h>
 
 void prompt(char **av, char **env);
 
@@ -12,4 +13,4 @@ void prompt(char **av, char **env);
 int _strlen(char *s);
 
 
-#endif
+#endif /* SHELL_H */
