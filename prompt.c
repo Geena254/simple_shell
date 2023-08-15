@@ -21,7 +21,7 @@ pid_t child_pid;
 while(1)
 {
 if (isatty(STDIN_FILENO))
-printf("sh$ ");
+printf("cisfun$ ");
 num_char = getline(&string, &n, stdin);
 if(num_char == -1)
 {
@@ -30,7 +30,7 @@ exit(EXIT_FAILURE);
 }
 i = 0;
 while (string[i])
-{
+i
 if (string[i] == '\n')
 {
 string[i] = 0;
