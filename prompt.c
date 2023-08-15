@@ -30,7 +30,6 @@ exit(EXIT_FAILURE);
 }
 i = 0;
 while (string[i])
-i
 if (string[i] == '\n')
 {
 string[i] = 0;
