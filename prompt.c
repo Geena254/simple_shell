@@ -30,6 +30,7 @@ exit(EXIT_FAILURE);
 }
 i = 0;
 while (string[i])
+{
 if (string[i] == '\n')
 {
 string[i] = 0;
@@ -40,6 +41,17 @@ k = 0;
 argv[k] = strtok(string, " ");
 while (argv[k] != NULL)
 argv[++k] = strtok(NULL, " ");
+
+/*  Handle PATH using the new function */
+handle_path(argv); /*  Call the new function to handle PATH */
+
+/*  If executable not found, skip fork and print error message */
+if (argv[0] == NULL || access(argv[0], X_OK) != 0) {
+    printf("%s: command not found\n", argv[0]);
+    continue;
+}
+
+
 child_pid = fork();
 if (child_pid == -1)
 {
