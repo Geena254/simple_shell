@@ -15,6 +15,7 @@ char *_getenv(const char *name);
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
 char *_strncpy(char *dest, char *src, size_t n);
+int _strcmp(char *s1, char *s2);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strcat(char *dest, char *src);
 

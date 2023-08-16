@@ -37,6 +37,13 @@ string[i] = 0;
 }
 i++;
 }
+
+/* Check for exit command */
+if(_strcmp(string, "exit") == 0)
+{
+free(string);
+exit(EXIT_SUCCESS); 
+}
 k = 0;
 argv[k] = strtok(string, " ");
 while (argv[k] != NULL)
