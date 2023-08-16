@@ -39,7 +39,7 @@ i++;
 }
 
 /* Check for exit command */
-if(_strcmp(string, "exit") == 0)
+if(_strcmp(string, "exit\n") == 0)
 {
 free(string);
 exit(EXIT_SUCCESS); 
@@ -57,7 +57,6 @@ if (argv[0] == NULL || access(argv[0], X_OK) != 0) {
     printf("%s: command not found\n", argv[0]);
     continue;
 }
-
 
 child_pid = fork();
 if (child_pid == -1)
