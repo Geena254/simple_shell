@@ -44,6 +44,11 @@ void prompt(char **av, char **env)
 			free(string);
 			exit(EXIT_SUCCESS); 
 		}
+		/* Add a check for the 'env' command */
+		else if (_strcmp(string, "env\n") == 0)
+		{
+			print_environment(env);
+        	}
 		k = 0;
 		argv[k] = strtok(string, " ");
 		while (argv[k] != NULL)

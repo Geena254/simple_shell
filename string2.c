@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
 * _strcat - concatenates two strings
 * @dest: input value

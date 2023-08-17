@@ -18,7 +18,6 @@ char *_strncpy(char *dest, char *src, size_t n);
 int _strcmp(char *s1, char *s2);
 int _strncmp(const char *s1, const char *s2, size_t n);
 char *_strcat(char *dest, char *src);
-
-
+void print_environment(char **env);
 
 #endif /* SHELL_H */

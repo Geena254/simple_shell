@@ -19,7 +19,6 @@ s++;
 return (length);
 }
 
-
 /**
 * _strncmp - compare string values with number of byte
 * @s1: input value
