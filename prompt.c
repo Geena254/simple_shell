@@ -22,7 +22,7 @@ void prompt(char **av, char **env)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
-		num_char = getline(&string, &n, stdin);
+		num_char = my_getline(&string, &n, stdin);
 		if(num_char == -1)
 		{
 			free(string);
@@ -33,7 +33,7 @@ void prompt(char **av, char **env)
 		{
 			if (string[i] == '\n')
 			{
-				string[i] = 0;
+				string[i] ='\0';
 			}
 			i++;
 		}
