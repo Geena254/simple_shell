@@ -14,7 +14,7 @@ void prompt(char **av, char **env)
 	size_t n = 0;
 	char *string = NULL;
 	ssize_t num_char;
-	int k, i, status;
+	int k, length, status;
 	char *argv[MAXIMUM_COMMAND];
 	pid_t child_pid;
 
@@ -22,24 +22,34 @@ void prompt(char **av, char **env)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
-		num_char = my_getline(&string, &n, stdin);
+		num_char = getline(&string, &n, stdin);
 		if (num_char == -1)
 		{
 			free(string);
 			exit(EXIT_FAILURE);
 		}
-		i = 0;
-		while (string[i])
+		/* removing the newline character */
+		length = _strlen(string);
+		if (length > 0 && string[length - 1] == '\n')
 		{
-			if (string[i] == '\n')
-				string[i] = '\0';
-			i++;
+			string[length - 1] = '\0';
 		}
+<<<<<<< HEAD
 		handl_exit(string);
-		/* Add a check for the 'env' command */
-		if (_strcmp(string, "env\n") == 0)
-			print_environment(env);
+=======
 
+		/* Check for exit command */
+		if (_strcmp(string, "exit\n") == 0)
+		{
+			free(string);
+			exit(EXIT_SUCCESS);
+		}
+>>>>>>> a71c2465e2e8287dd5cf13ab1177230f03aa4436
+		/* Add a check for the 'env' command */
+		else if (_strcmp(string, "env\n") == 0)
+		{
+			print_environment(env);
+		}
 		k = 0;
 		argv[k] = strtok(string, " ");
 		while (argv[k] != NULL)
@@ -47,8 +57,9 @@ void prompt(char **av, char **env)
 			k++;
 			argv[k] = strtok(NULL, " ");
 		}
-		/*  Handle PATH by calling the new function */
-		handle_path(argv);
+		i/*  Handle PATH using the new function */
+			handle_path(argv); /*  Call the new function to handle PATH */
+
 		/*  If executable not found, skip fork and print error message */
 		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
 		{
@@ -56,21 +67,7 @@ void prompt(char **av, char **env)
 			continue;
 		}
 
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			free(string);
-			exit(EXIT_FAILURE);
-		}
-
-		if (child_pid == 0)
-		{
-			if (execve(argv[0], argv, env) == -1)
-				printf("%s: no such file or directory found\n", av[0]);
-			free(string);
-			exit(EXIT_FAILURE);
-		}
-		else
-			wait(&status);
+		/* Call the extracted function to execute the command */
+		execute_command(argv, env);
 	}
 }

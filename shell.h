@@ -14,6 +14,8 @@ void handl_exit(char *string);
 char *_getenv(const char *name);
 void print_environment(char **env);
 ssize_t my_getline(char **lineptr, size_t *m, FILE *stream);
+void execute_command(char **argv, char **env);
+
 /* strings manipulation */
 int _strlen(char *s);
 char *_strcpy(char *dest, char *src);
