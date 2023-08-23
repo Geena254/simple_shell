@@ -14,7 +14,7 @@ void prompt(char **av, char **env)
 	size_t n = 0;
 	char *string = NULL;
 	ssize_t num_char;
-	int k, i, status;
+	int k, length, status;
 	char *argv[MAXIMUM_COMMAND];
 	pid_t child_pid;
 
@@ -28,14 +28,11 @@ void prompt(char **av, char **env)
 			free(string);
 			exit(EXIT_FAILURE);
 		}
-		i = 0;
-		while (string[i])
+		/* removing the newline character */
+		length = _strlen(string);
+		if (length > 0 && string[length - 1] == '\n')
 		{
-			if (string[i] == '\n')
-			{
-				string[i] = 0;
-			}
-			i++;
+			string[length - 1] = '\0';
 		}
 
 		/* Check for exit command */
