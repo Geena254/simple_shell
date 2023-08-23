@@ -20,6 +20,7 @@ void print_environment(char **env);
 ssize_t my_getline(char **lineptr, size_t *m, FILE *stream);
 void execute_command(char **argv, char **env);
 void tokenize_input(char *input, char **argv);
+void remove_newline(char *input);
 
 /* strings manipulation */
 int _strlen(char *s);

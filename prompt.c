@@ -27,19 +27,16 @@ void prompt(char **av, char **env)
 			free(string);
 			exit(EXIT_FAILURE);
 		}
-		/* removing the newline character */
-		length = _strlen(string);
-		if (length > 0 && string[length - 1] == '\n')
-		{
-			string[length - 1] = '\0';
-		}
 
 		handl_exit(string);
+		rm_newline(string);
+
 		/* Add a check for the 'env' command */
 		if (_strcmp(string, "env\n") == 0)
 		{
 			print_environment(env);
 		}
+
 		tokenize_input(string, argv);
 
 		/*  Handle PATH by calling  the new function */
