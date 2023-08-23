@@ -36,7 +36,6 @@ void prompt(char **av, char **env)
 			i++;
 		}
 		handl_exit(string);
-
 		/* Add a check for the 'env' command */
 		if (_strcmp(string, "env\n") == 0)
 			print_environment(env);
