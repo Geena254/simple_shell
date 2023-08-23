@@ -14,15 +14,14 @@ void prompt(char **av, char **env)
 	size_t n = 0;
 	char *string = NULL;
 	ssize_t num_char;
-	int k, length, status;
+	int length;
 	char *argv[MAXIMUM_COMMAND];
-	pid_t child_pid;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
-		num_char = getline(&string, &n, stdin);
+		num_char = my_getline(&string, &n, stdin);
 		if (num_char == -1)
 		{
 			free(string);
@@ -34,32 +33,17 @@ void prompt(char **av, char **env)
 		{
 			string[length - 1] = '\0';
 		}
-<<<<<<< HEAD
-		handl_exit(string);
-=======
 
-		/* Check for exit command */
-		if (_strcmp(string, "exit\n") == 0)
-		{
-			free(string);
-			exit(EXIT_SUCCESS);
-		}
->>>>>>> a71c2465e2e8287dd5cf13ab1177230f03aa4436
+		handl_exit(string);
 		/* Add a check for the 'env' command */
-		else if (_strcmp(string, "env\n") == 0)
+		if (_strcmp(string, "env\n") == 0)
 		{
 			print_environment(env);
 		}
-		k = 0;
-		argv[k] = strtok(string, " ");
-		while (argv[k] != NULL)
-		{
-			k++;
-			argv[k] = strtok(NULL, " ");
-		}
-		i/*  Handle PATH using the new function */
-			handle_path(argv); /*  Call the new function to handle PATH */
+		tokenize_input(string, argv);
 
+		/*  Handle PATH by calling  the new function */
+		handle_path(argv);
 		/*  If executable not found, skip fork and print error message */
 		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
 		{

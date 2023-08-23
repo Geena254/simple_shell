@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <errno.h>
-#include <string.h>
-
+#include "shell.h"
 #define INITIAL_BUFF_SIZE 1024
 #define BUFFER_INCREMENT 1024
 
@@ -27,9 +22,7 @@ ssize_t my_getline(char **lineptr, size_t *m, FILE *stream)
 	{
 		*lineptr = buff;
 		*m = INITIAL_BUFF_SIZE;
-		pos = 0;
 	}
-
 	while (1)
 	{
 		if (pos == 0)
@@ -49,7 +42,6 @@ ssize_t my_getline(char **lineptr, size_t *m, FILE *stream)
 				return (-1);
 			}
 		}
-
 		c = buff[pos];
 		pos++;
 		if (c == '\n' || c == '\0')
@@ -59,6 +51,5 @@ ssize_t my_getline(char **lineptr, size_t *m, FILE *stream)
 			break;
 		}
 	}
-
 	return (pos);
 }

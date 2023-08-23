@@ -1,5 +1,11 @@
 #include "shell.h"
 
+/**
+ * tokenize_input -  Function that checs string
+ * @input: string to check
+ * @argv: arguements value
+ */
+
 void tokenize_input(char *input, char **argv)
 {
 	int k;

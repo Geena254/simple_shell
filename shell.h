@@ -7,7 +7,11 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <errno.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
+extern char **environ;
 void prompt(char **av, char **env);
 void handle_path(char **argv);
 void handl_exit(char *string);
@@ -15,6 +19,7 @@ char *_getenv(const char *name);
 void print_environment(char **env);
 ssize_t my_getline(char **lineptr, size_t *m, FILE *stream);
 void execute_command(char **argv, char **env);
+void tokenize_input(char *input, char **argv);
 
 /* strings manipulation */
 int _strlen(char *s);
