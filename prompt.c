@@ -9,12 +9,11 @@
  * This function creates a basic shell where the user can enter commands.
  * It displays a prompt "cisfun$" and waits for the user to input a command.
  */
-void prompt(char **av, char **env)
+void prompt(char **env)
 {
 	size_t n = 0;
 	char *string = NULL;
 	ssize_t num_char;
-	int length;
 	char *argv[MAXIMUM_COMMAND];
 
 	while (1)
@@ -29,7 +28,7 @@ void prompt(char **av, char **env)
 		}
 
 		handl_exit(string);
-		rm_newline(string);
+		remove_newline(string);
 
 		/* Add a check for the 'env' command */
 		if (_strcmp(string, "env\n") == 0)

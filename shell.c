@@ -9,12 +9,12 @@
  * Return: _exit = 0.
  */
 
-int main(int ac, char **av, char **env)
+int main(int ac, char **env)
 {
-if (ac == 1)
-{
-prompt(av, env);
-}
+	if (ac == 1)
+	{
+		prompt(env);
+	}
 
-return (0);
+	return (0);
 }

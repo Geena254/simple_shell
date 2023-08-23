@@ -6,7 +6,7 @@
  * Return: Nothing.
  */
 
-void rm_newline(char *input)
+void remove_newline(char *input)
 {
 	int length;
 
