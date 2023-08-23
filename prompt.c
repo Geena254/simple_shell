@@ -22,7 +22,7 @@ void prompt(char **av, char **env)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
-		num_char = my_getline(&string, &n, stdin);
+		num_char = getline(&string, &n, stdin);
 		if (num_char == -1)
 		{
 			free(string);
@@ -32,15 +32,23 @@ void prompt(char **av, char **env)
 		while (string[i])
 		{
 			if (string[i] == '\n')
-				string[i] = '\0';
+			{
+				string[i] = 0;
+			}
 			i++;
 		}
-		handl_exit(string);
 
+		/* Check for exit command */
+		if (_strcmp(string, "exit\n") == 0)
+		{
+			free(string);
+			exit(EXIT_SUCCESS);
+		}
 		/* Add a check for the 'env' command */
-		if (_strcmp(string, "env\n") == 0)
+		else if (_strcmp(string, "env\n") == 0)
+		{
 			print_environment(env);
-
+		}
 		k = 0;
 		argv[k] = strtok(string, " ");
 		while (argv[k] != NULL)
@@ -48,8 +56,9 @@ void prompt(char **av, char **env)
 			k++;
 			argv[k] = strtok(NULL, " ");
 		}
-		/*  Handle PATH by calling the new function */
-		handle_path(argv);
+		i/*  Handle PATH using the new function */
+			handle_path(argv); /*  Call the new function to handle PATH */
+
 		/*  If executable not found, skip fork and print error message */
 		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
 		{
@@ -57,21 +66,7 @@ void prompt(char **av, char **env)
 			continue;
 		}
 
-		child_pid = fork();
-		if (child_pid == -1)
-		{
-			free(string);
-			exit(EXIT_FAILURE);
-		}
-
-		if (child_pid == 0)
-		{
-			if (execve(argv[0], argv, env) == -1)
-				printf("%s: no such file or directory found\n", av[0]);
-			free(string);
-			exit(EXIT_FAILURE);
-		}
-		else
-			wait(&status);
+		/* Call the extracted function to execute the command */
+		execute_command(argv, env);
 	}
 }
