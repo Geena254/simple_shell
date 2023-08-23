@@ -18,12 +18,12 @@ void prompt(char **av, char **env)
 	char *argv[MAXIMUM_COMMAND];
 	pid_t child_pid;
 
-	while(1)
+	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
 		num_char = my_getline(&string, &n, stdin);
-		if(num_char == -1)
+		if (num_char == -1)
 		{
 			free(string);
 			exit(EXIT_FAILURE);
@@ -32,22 +32,15 @@ void prompt(char **av, char **env)
 		while (string[i])
 		{
 			if (string[i] == '\n')
-			{
-				string[i] ='\0';
-			}
+				string[i] = '\0';
 			i++;
 		}
+		handl_exit(string);
 
-		/* Check for exit command */
-		if(_strcmp(string, "exit\n") == 0)
-		{
-			exit(EXIT_SUCCESS); 
-		}
 		/* Add a check for the 'env' command */
-		else if (_strcmp(string, "env\n") == 0)
-		{
+		if (_strcmp(string, "env\n") == 0)
 			print_environment(env);
-        	}
+
 		k = 0;
 		argv[k] = strtok(string, " ");
 		while (argv[k] != NULL)
@@ -55,11 +48,11 @@ void prompt(char **av, char **env)
 			k++;
 			argv[k] = strtok(NULL, " ");
 		}
-		/*  Handle PATH using the new function */
-		handle_path(argv); /*  Call the new function to handle PATH */
-
+		/*  Handle PATH by calling the new function */
+		handle_path(argv);
 		/*  If executable not found, skip fork and print error message */
-		if (argv[0] == NULL || access(argv[0], X_OK) != 0) {
+		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
+		{
 			printf("%s: command not found\n", argv[0]);
 			continue;
 		}
@@ -70,6 +63,7 @@ void prompt(char **av, char **env)
 			free(string);
 			exit(EXIT_FAILURE);
 		}
+
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, env) == -1)
@@ -78,8 +72,6 @@ void prompt(char **av, char **env)
 			exit(EXIT_FAILURE);
 		}
 		else
-		{
 			wait(&status);
-		}
 	}
 }

@@ -10,6 +10,7 @@
 
 void prompt(char **av, char **env);
 void handle_path(char **argv);
+void handl_exit(char *string);
 char *_getenv(const char *name);
 void print_environment(char **env);
 ssize_t my_getline(char **lineptr, size_t *m, FILE *stream);

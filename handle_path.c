@@ -22,7 +22,7 @@ void handle_path(char **argv)
 	}
 
 	/*    Iterate through each directory in the PATH */
-	while(token != NULL)
+	while (token != NULL)
 	{
 		/*  Construct the full path to the command executable */
 		_strncpy(command_path, token, max_length - 1);
@@ -31,7 +31,7 @@ void handle_path(char **argv)
 		_strcat(command_path, argv[0]);
 
 		/*  Check if the constructed path is an executable file and accessible */
-		if(access(command_path, X_OK) == 0)
+		if (access(command_path, X_OK) == 0)
 		{
 			argv[0] = strcpy(argv[0], command_path);
 			break; /* Stop searching further */
