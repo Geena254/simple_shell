@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * rm_newline - Function that removes a new line
+ * remove_newline - Function that removes a new line
  * @input: string to check.
  * Return: Nothing.
  */
