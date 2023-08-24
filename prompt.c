@@ -8,7 +8,7 @@
  * This function creates a basic shell where the user can enter commands.
  * It displays a prompt "cisfun$" and waits for the user to input a command.
  */
-void prompt(char **av, char **env)
+void prompt(char **env)
 {
 	size_t n = 0;
 	char *string = NULL;
@@ -42,7 +42,10 @@ void prompt(char **av, char **env)
 		{ 
 			if(execve(argv[0], argv, env) == -1)
 			{
-				printf("%s: no such file or directory found\n", av[0]);
+				char error_message[] = "no such file or directory found\n";
+				write(STDOUT_FILENO, argv[0], _strlen(argv[0]));
+				write(STDOUT_FILENO, ": ", 2);
+				write(STDOUT_FILENO, error_message, _strlen(error_message));
 				free(string);
 				exit(EXIT_FAILURE);
 			}
