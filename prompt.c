@@ -15,7 +15,7 @@ void prompt(char **env)
 	int status;
 	pid_t child_pid;
 	ssize_t num_char;
-	char error_message[];
+	char error_message[34];
 
 	while (1)
 	{
@@ -38,7 +38,7 @@ void prompt(char **env)
 		{
 			if (execve(argv[0], argv, env) == -1)
 			{
-				error_message[] = "No such file or directory found\n";
+				strcpy(error_message, "No such file or directory found\n");
 				write(STDOUT_FILENO, argv[0], _strlen(argv[0]));
 				write(STDOUT_FILENO, ": ", 2);
 				write(STDOUT_FILENO, error_message, _strlen(error_message));
