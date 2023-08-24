@@ -19,7 +19,7 @@ void prompt(char **env)
 
 	while (1)
 	{
-		write(1, "cisfun$ ", 9);
+		write(STDOUT_FILENO, "$ ", 2);
 		num_char =  getline(&string, &n, stdin);
 		if (num_char == -1)
 		{
