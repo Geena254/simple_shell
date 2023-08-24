@@ -4,7 +4,6 @@
 
 /**
  * prompt - Display a simple shell prompt and execute user commands.
- * @av: Array of strings containing the program name and arguments.
  * @env: Array of strings containing the environment variables.
  * This function creates a basic shell where the user can enter commands.
  * It displays a prompt "cisfun$" and waits for the user to input a command.

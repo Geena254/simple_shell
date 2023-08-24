@@ -4,7 +4,6 @@
 /**
  * main - main arguments functions
  * @ac:count of argumnents
- * @av: arguments
  * @env: environment
  * Return: _exit = 0.
  */
