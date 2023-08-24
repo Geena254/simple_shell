@@ -26,17 +26,10 @@ void prompt(char **env)
 			exit(EXIT_FAILURE);
 		}
 
-		handl_exit(string);
 		remove_newline(string);
-		/* Add a check for the 'env' command */
-		if (_strcmp(string, "env\n") == 0)
-		{
-			print_environment(env);
-		}
-
+		 /* Tokenize input and store tokens in argv */
 		tokenize_input(string, argv);
-		/*  Handle PATH by calling  the new function */
-		handle_path(argv);
+	
 		/*  If executable not found, skip fork and print error message */
 		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
 		{
