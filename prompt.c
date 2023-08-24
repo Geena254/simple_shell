@@ -8,18 +8,21 @@
  * This function creates a basic shell where the user can enter commands.
  * It displays a prompt "cisfun$" and waits for the user to input a command.
  */
-void prompt(char **env)
+void prompt(char **av, char **env)
 {
 	size_t n = 0;
 	char *string = NULL;
+	char *argv[] = {NULL, NULL};
+
+	int  status;
+	pid_t child_pid;
 	ssize_t num_char;
-	char *argv[MAXIMUM_COMMAND];
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			write(1, "cisfun$ ", 9);
-		num_char = my_getline(&string, &n, stdin);
+		num_char =  getline(&string, &n, stdin);
 		if (num_char == -1)
 		{
 			free(string);
@@ -27,17 +30,28 @@ void prompt(char **env)
 		}
 
 		remove_newline(string);
-		 /* Tokenize input and store tokens in argv */
-		tokenize_input(string, argv);
-	
-		/*  If executable not found, skip fork and print error message */
-		if (argv[0] == NULL || access(argv[0], X_OK) != 0)
+
+		argv[0] = string;
+		child_pid = fork();
+		if (child_pid == -1)
 		{
-			write(STDOUT_FILENO, argv[0], _strlen(argv[0]));
-			write(STDOUT_FILENO, ": command not found\n", 20);
-			continue;
+			free(string);
+			exit(EXIT_FAILURE);
 		}
-		/* Call the extracted function to execute the command */
-		execute_command(argv, env);
+		if(child_pid == 0)
+		{ 
+			if(execve(argv[0], argv, env) == -1)
+			{
+				printf("%s: no such file or directory found\n", av[0]);
+				free(string);
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{ 
+			wait(&status);
+		}
+
+
 	}
 }

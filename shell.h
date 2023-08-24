@@ -12,7 +12,7 @@
 #include <sys/types.h>
 
 extern char **environ;
-void prompt(char **env);
+void prompt(char **av, char **env);
 void handle_path(char **argv);
 void handl_exit(char *string);
 char *_getenv(const char *name);
