@@ -38,9 +38,9 @@ void prompt(char **env)
                         if (execve(argv[0], argv, env) == -1)
                         {
                                 strcpy(error_message, "No such file or directory found\n");
-                                write(STDOUT_FILENO, argv[0], _strlen(argv[0]));
-                                write(STDOUT_FILENO, ": ", 2);
-                                write(STDOUT_FILENO, error_message, _strlen(error_message));
+                                write(STDERR_FILENO, argv[0], _strlen(argv[0]));
+                                write(STDERR_FILENO, ": ", 2);
+                                write(STDERR_FILENO, error_message, _strlen(error_message));
                                 exit(1);
                         }
                 }
