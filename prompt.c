@@ -1,5 +1,5 @@
 #include "shell.h"
-#define MAXIMUM_COMMAND 10
+#define MAXIMUM_COMMAND 100
 
 /**
  * prompt - Display a simple shell prompt and execute user commands.
@@ -15,35 +15,33 @@ void prompt(char **env)
 	int status;
 	pid_t child_pid;
 	ssize_t num_char;
-	char error_message[34];
 
 	while (1)
 	{
 		write(STDOUT_FILENO, "$ ", 2);
-		num_char =  getline(&string, &n, stdin);
-		if (num_char == -1)
+		if ((num_char = getline(&string, &n, stdin)) == -1)
 		{
 			free(string);
-			exit(EXIT_FAILURE);
+			break;
 		}
+		/* removing newline character */
 		remove_newline(string);
+
 		argv[0] = string;
 		child_pid = fork();
 		if (child_pid == -1)
 		{
-			free(string);
+			perror("Fork");
 			exit(EXIT_FAILURE);
 		}
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, env) == -1)
 			{
-				strcpy(error_message, "No such file or directory found\n");
-				write(STDOUT_FILENO, argv[0], _strlen(argv[0]));
-				write(STDOUT_FILENO, ": ", 2);
-				write(STDOUT_FILENO, error_message, _strlen(error_message));
-				free(string);
-				exit(EXIT_FAILURE);
+				write(STDERR_FILENO, argv[0], _strlen(argv[0]));
+				write(STDERR_FILENO, ": ", 2);
+				write(STDERR_FILENO, "No such file or directory found\n", 34);
+				exit(1);
 			}
 		}
 		else
